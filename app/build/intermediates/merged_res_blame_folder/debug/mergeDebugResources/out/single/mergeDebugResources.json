@@ -1,0 +1,66 @@
+[
+    {
+        "merged": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-debug-4:\\drawable_bg_badge.xml.flat",
+        "source": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-main-6:\\drawable\\bg_badge.xml"
+    },
+    {
+        "merged": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-debug-4:\\drawable_bg_button.xml.flat",
+        "source": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-main-6:\\drawable\\bg_button.xml"
+    },
+    {
+        "merged": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-debug-4:\\drawable_bg_widget_cta.xml.flat",
+        "source": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-main-6:\\drawable\\bg_widget_cta.xml"
+    },
+    {
+        "merged": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-debug-4:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-main-6:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-debug-4:\\layout_activity_search.xml.flat",
+        "source": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-main-6:\\layout\\activity_search.xml"
+    },
+    {
+        "merged": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-debug-4:\\drawable_bg_widget.xml.flat",
+        "source": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-main-6:\\drawable\\bg_widget.xml"
+    },
+    {
+        "merged": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-debug-4:\\drawable_bg_chip.xml.flat",
+        "source": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-main-6:\\drawable\\bg_chip.xml"
+    },
+    {
+        "merged": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-debug-4:\\drawable_ic_arrow.xml.flat",
+        "source": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-main-6:\\drawable\\ic_arrow.xml"
+    },
+    {
+        "merged": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-debug-4:\\drawable_ic_search.xml.flat",
+        "source": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-main-6:\\drawable\\ic_search.xml"
+    },
+    {
+        "merged": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-debug-4:\\drawable_bg_button_ghost.xml.flat",
+        "source": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-main-6:\\drawable\\bg_button_ghost.xml"
+    },
+    {
+        "merged": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-debug-4:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-main-6:\\drawable\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-debug-4:\\xml_search_widget_info.xml.flat",
+        "source": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-main-6:\\xml\\search_widget_info.xml"
+    },
+    {
+        "merged": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-debug-4:\\drawable_bg_card.xml.flat",
+        "source": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-main-6:\\drawable\\bg_card.xml"
+    },
+    {
+        "merged": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-debug-4:\\layout_widget_search.xml.flat",
+        "source": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-main-6:\\layout\\widget_search.xml"
+    },
+    {
+        "merged": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-debug-4:\\drawable_bg_input.xml.flat",
+        "source": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-main-6:\\drawable\\bg_input.xml"
+    },
+    {
+        "merged": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-debug-4:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\Etika Sari\\.gradle\\daemon\\8.9\\com.caricepat.shopee.app-main-6:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    }
+]

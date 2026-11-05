@@ -43,6 +43,7 @@
     <string name="not_installed">Shopee belum terpasang. Kata kunci sudah disalin ke clipboard.</string>
     <string name="not_installed_store">Shopee belum terpasang. Membuka Play Store…</string>
     <string name="copied_open_app">Kata kunci disalin. Tempel di kolom pencarian Shopee.</string>
+    <string name="failed_open">Tidak bisa membuka Shopee. Kata kunci sudah disalin ke clipboard.</string>
 
     <string name="widget_text">Cari di Shopee</string>
     <string name="widget_cta">Cari</string>

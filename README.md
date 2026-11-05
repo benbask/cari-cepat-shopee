@@ -2,6 +2,10 @@
 
 Widget layar utama untuk membuka **hasil pencarian Shopee Indonesia** tanpa mampir ke tab video.
 
+## Unduh APK
+
+APK siap pasang ada di halaman [Releases](https://github.com/benbask/cari-cepat-shopee/releases/latest).
+
 ## Kenapa begini?
 
 Widget Android (`RemoteViews`) **tidak mengizinkan kolom ketik (`EditText`)** di dalam widget.

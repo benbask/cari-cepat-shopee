@@ -140,6 +140,9 @@ class SearchActivity : Activity() {
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show()
             }
             is ShopeeLauncher.Result.Success -> Unit
+            ShopeeLauncher.Result.Failed -> {
+                Toast.makeText(this, R.string.failed_open, Toast.LENGTH_LONG).show()
+            }
         }
 
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
