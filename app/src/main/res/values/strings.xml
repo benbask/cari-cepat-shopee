@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cari Cepat</string>
+    <string name="widget_name">Cari Cepat Shopee</string>
+    <string name="widget_description">Kotak pencarian langsung ke Shopee, tanpa tab video.</string>
+
+    <string name="tagline">Pencarian langsung ke Shopee</string>
+    <string name="hero_title">Cari Cepat</string>
+    <string name="hero_subtitle">Ketuk widget, ketik, Enter. Langsung ke hasil pencarian Shopee — tanpa mampir ke tab video.</string>
+
+    <string name="widget_card_title">Widget layar utama</string>
+    <string name="widget_card_desc">Widget kecil berbentuk kolom pencarian. Sekali ketuk, keyboard langsung siap.</string>
+    <string name="pin_widget">Pasang widget di layar utama</string>
+    <string name="pin_manual">Tahan layar utama → Widget → pilih “Cari Cepat Shopee”.</string>
+    <string name="widget_installed">Widget sudah terpasang ✓</string>
+    <string name="widget_not_installed">Widget belum terpasang.</string>
+
+    <string name="history_card_title">Riwayat pencarian</string>
+    <string name="history_switch">Simpan pencarian terakhir</string>
+    <string name="clear_history">Hapus riwayat</string>
+    <string name="history_cleared">Riwayat dihapus.</string>
+    <string name="history_empty">Belum ada riwayat.</string>
+    <string name="history_off_toast">Riwayat dimatikan dan dihapus.</string>
+
+    <string name="status_card_title">Status</string>
+    <string name="shopee_found">Shopee terdeteksi di perangkat ✓</string>
+    <string name="shopee_missing">Shopee belum terpasang — pencarian akan dibuka di browser.</string>
+
+    <string name="how_title">Cara pakai</string>
+    <string name="how_steps">1. Pasang widget di layar utama.\n2. Ketuk widget, kolom ketik langsung terbuka.\n3. Tulis barang, tekan Enter atau tombol cari.\n4. Shopee langsung membuka halaman hasil pencarian.</string>
+
+    <string name="try_search">Coba pencarian sekarang</string>
+
+    <string name="search_hint">Cari di Shopee…</string>
+    <string name="search_hint_short">Cari barang di Shopee</string>
+    <string name="search_action">Cari</string>
+    <string name="search_button_desc">Cari</string>
+    <string name="recent_title">Pencarian terakhir</string>
+    <string name="clear">Hapus</string>
+    <string name="type_first">Ketik dulu barang yang mau dicari.</string>
+    <string name="search_tip">Tekan Enter untuk langsung membuka Shopee.</string>
+
+    <string name="not_installed">Shopee belum terpasang. Kata kunci sudah disalin ke clipboard.</string>
+    <string name="not_installed_store">Shopee belum terpasang. Membuka Play Store…</string>
+    <string name="copied_open_app">Kata kunci disalin. Tempel di kolom pencarian Shopee.</string>
+
+    <string name="widget_text">Cari di Shopee</string>
+    <string name="widget_cta">Cari</string>
+    <string name="widget_desc">Kolom pencarian Shopee</string>
+
+    <string name="disclaimer">Aplikasi tidak resmi dan tidak berafiliasi dengan Shopee. Hanya membuka tautan pencarian milik Shopee.</string>
+    <string name="privacy_note">Riwayat hanya disimpan di perangkat ini.</string>
+</resources>
