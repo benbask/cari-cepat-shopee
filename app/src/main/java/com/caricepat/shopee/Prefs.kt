@@ -11,6 +11,11 @@ object Prefs {
     private const val KEY_RECENT = "recent"
     private const val KEY_HISTORY = "history_enabled"
     private const val KEY_METHOD = "preferred_method"
+    private const val KEY_WIDGET_THEME = "widget_theme"
+    private const val KEY_WIDGET_ALPHA = "widget_alpha"
+    private const val KEY_WIDGET_CORNER = "widget_corner"
+    private const val KEY_WIDGET_TEXT_SIZE = "widget_text_size"
+    private const val KEY_WIDGET_CTA = "widget_cta"
     private const val SEPARATOR = "\u0001"
     private const val MAX_RECENT = 8
 
@@ -52,5 +57,56 @@ object Prefs {
 
     fun setPreferredMethod(context: Context, index: Int) {
         prefs(context).edit().putInt(KEY_METHOD, index).apply()
+    }
+
+    // --- Tampilan widget ---
+
+    fun widgetTheme(context: Context): Int =
+        WidgetStyle.clampTheme(prefs(context).getInt(KEY_WIDGET_THEME, 0))
+
+    fun setWidgetTheme(context: Context, index: Int) {
+        prefs(context).edit().putInt(KEY_WIDGET_THEME, WidgetStyle.clampTheme(index)).apply()
+    }
+
+    fun widgetTransparency(context: Context): Int =
+        WidgetStyle.clampTransparency(prefs(context).getInt(KEY_WIDGET_ALPHA, 0))
+
+    fun setWidgetTransparency(context: Context, index: Int) {
+        prefs(context).edit()
+            .putInt(KEY_WIDGET_ALPHA, WidgetStyle.clampTransparency(index))
+            .apply()
+    }
+
+    fun widgetCorner(context: Context): Int =
+        WidgetStyle.clampCorner(prefs(context).getInt(KEY_WIDGET_CORNER, 1))
+
+    fun setWidgetCorner(context: Context, index: Int) {
+        prefs(context).edit().putInt(KEY_WIDGET_CORNER, WidgetStyle.clampCorner(index)).apply()
+    }
+
+    fun widgetTextSize(context: Context): Int =
+        WidgetStyle.clampTitleSize(prefs(context).getInt(KEY_WIDGET_TEXT_SIZE, 1))
+
+    fun setWidgetTextSize(context: Context, index: Int) {
+        prefs(context).edit()
+            .putInt(KEY_WIDGET_TEXT_SIZE, WidgetStyle.clampTitleSize(index))
+            .apply()
+    }
+
+    fun showWidgetCta(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_WIDGET_CTA, true)
+
+    fun setShowWidgetCta(context: Context, show: Boolean) {
+        prefs(context).edit().putBoolean(KEY_WIDGET_CTA, show).apply()
+    }
+
+    fun resetWidgetStyle(context: Context) {
+        prefs(context).edit()
+            .remove(KEY_WIDGET_THEME)
+            .remove(KEY_WIDGET_ALPHA)
+            .remove(KEY_WIDGET_CORNER)
+            .remove(KEY_WIDGET_TEXT_SIZE)
+            .remove(KEY_WIDGET_CTA)
+            .apply()
     }
 }

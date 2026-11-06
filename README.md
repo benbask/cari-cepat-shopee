@@ -21,6 +21,7 @@ Total: 1 ketukan + mengetik. Tidak ada tab video, tidak ada banner, hemat waktu/
 ## Fitur
 
 - Widget 4x1 bergaya kolom pencarian.
+- Kustomisasi tampilan widget (v1.4): 4 tema (Putih, Oranye Shopee, Gelap, Mint), transparansi 100–50%, sudut kecil/sedang/besar, ukuran teks, dan tombol Cari bisa disembunyikan. Ada pratinjau langsung di aplikasi.
 - Riwayat pencarian (bisa dimatikan, hanya lokal di perangkat).
 - Tombol "Pasang widget" langsung dari aplikasi (Android 8+).
 - Deteksi Shopee terpasang; jika tidak ada, kata kunci disalin dan Play Store dibuka.

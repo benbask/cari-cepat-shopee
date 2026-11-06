@@ -44,6 +44,11 @@
             android:theme="@style/Theme.CariCepat.Search"
             android:windowSoftInputMode="stateVisible|adjustResize" />
 
+        <activity
+            android:name=".WidgetStyleActivity"
+            android:exported="false"
+            android:label="@string/widget_style_title" />
+
         <receiver
             android:name=".SearchWidgetProvider"
             android:exported="true"

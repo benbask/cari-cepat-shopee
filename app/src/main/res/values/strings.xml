@@ -46,8 +46,35 @@
     <string name="failed_open">Tidak bisa membuka Shopee. Kata kunci sudah disalin ke clipboard.</string>
 
     <string name="widget_text">Cari di Shopee</string>
+    <string name="widget_subtitle">Ketuk untuk mencari</string>
     <string name="widget_cta">Cari</string>
     <string name="widget_desc">Kolom pencarian Shopee</string>
+
+    <string name="widget_style_button">Atur tampilan widget</string>
+    <string name="widget_style_title">Tampilan widget</string>
+    <string name="widget_style_desc">Pilih tema, transparansi, dan ukuran. Perubahan langsung tersimpan dan muncul di widget layar utama.</string>
+    <string name="widget_style_preview">Pratinjau</string>
+    <string name="theme_label">Tema</string>
+    <string name="theme_white">Putih bersih</string>
+    <string name="theme_shopee">Oranye Shopee</string>
+    <string name="theme_dark">Gelap</string>
+    <string name="theme_mint">Mint</string>
+    <string name="transparency_label">Transparansi latar</string>
+    <string name="transparency_100">100%</string>
+    <string name="transparency_85">85%</string>
+    <string name="transparency_70">70%</string>
+    <string name="transparency_50">50%</string>
+    <string name="corner_label">Sudut widget</string>
+    <string name="corner_small">Kecil</string>
+    <string name="corner_medium">Sedang</string>
+    <string name="corner_large">Besar</string>
+    <string name="text_size_label">Ukuran teks</string>
+    <string name="size_small">Kecil</string>
+    <string name="size_normal">Normal</string>
+    <string name="size_large">Besar</string>
+    <string name="show_cta">Tampilkan tombol “Cari”</string>
+    <string name="widget_style_reset">Atur ulang tampilan</string>
+    <string name="widget_style_reset_done">Tampilan widget diatur ulang.</string>
 
     <string name="disclaimer">Aplikasi tidak resmi dan tidak berafiliasi dengan Shopee. Hanya membuka tautan pencarian milik Shopee.</string>
     <string name="privacy_note">Riwayat hanya disimpan di perangkat ini.</string>

@@ -35,4 +35,22 @@ class MainActivityTest {
         assertEquals(View.VISIBLE, button.visibility)
         assertEquals(LinearLayout.VERTICAL, (button.parent as LinearLayout).orientation)
     }
+
+    @Test
+    fun widgetStyleActivityOpensWithoutCrash() {
+        val controller = Robolectric.buildActivity(WidgetStyleActivity::class.java).setup()
+        assertNotNull(controller.get())
+    }
+
+    @Test
+    fun widgetCardShowsStyleButton() {
+        val activity = Robolectric.buildActivity(MainActivity::class.java).setup().get()
+        val button = activity.findViewById<Button>(R.id.btnWidgetStyle)
+
+        assertEquals(View.VISIBLE, button.visibility)
+        assertEquals(
+            activity.getString(R.string.widget_style_button),
+            button.text.toString()
+        )
+    }
 }

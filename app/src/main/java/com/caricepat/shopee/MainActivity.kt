@@ -7,6 +7,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.TypedValue
@@ -48,6 +49,9 @@ class MainActivity : Activity() {
         historySwitch = findViewById(R.id.historySwitch)
 
         findViewById<Button>(R.id.btnPinWidget).setOnClickListener { pinWidget() }
+        findViewById<Button>(R.id.btnWidgetStyle).setOnClickListener {
+            startActivity(Intent(this, WidgetStyleActivity::class.java))
+        }
         findViewById<Button>(R.id.btnTry).setOnClickListener {
             startActivity(SearchActivity.intent(this))
             overridePendingTransition(0, 0)

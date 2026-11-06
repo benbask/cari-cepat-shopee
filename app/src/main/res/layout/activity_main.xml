@@ -89,6 +89,14 @@
                 android:layout_marginTop="14dp"
                 android:text="@string/pin_widget" />
 
+            <Button
+                android:id="@+id/btnWidgetStyle"
+                style="@style/GhostButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/widget_style_button" />
+
             <TextView
                 android:id="@+id/widgetStatus"
                 android:layout_width="match_parent"
