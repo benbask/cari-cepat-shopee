@@ -12,7 +12,7 @@ object Prefs {
     private const val KEY_HISTORY = "history_enabled"
     private const val KEY_METHOD = "preferred_method"
     private const val KEY_WIDGET_THEME = "widget_theme"
-    private const val KEY_WIDGET_ALPHA = "widget_alpha"
+    private const val KEY_WIDGET_TRANSPARENCY = "widget_transparency"
     private const val KEY_WIDGET_CORNER = "widget_corner"
     private const val KEY_WIDGET_TEXT_SIZE = "widget_text_size"
     private const val KEY_WIDGET_CTA = "widget_cta"
@@ -69,11 +69,13 @@ object Prefs {
     }
 
     fun widgetTransparency(context: Context): Int =
-        WidgetStyle.clampTransparency(prefs(context).getInt(KEY_WIDGET_ALPHA, 0))
+        WidgetStyle.clampTransparency(
+            prefs(context).getInt(KEY_WIDGET_TRANSPARENCY, WidgetStyle.DEFAULT_TRANSPARENCY)
+        )
 
-    fun setWidgetTransparency(context: Context, index: Int) {
+    fun setWidgetTransparency(context: Context, percent: Int) {
         prefs(context).edit()
-            .putInt(KEY_WIDGET_ALPHA, WidgetStyle.clampTransparency(index))
+            .putInt(KEY_WIDGET_TRANSPARENCY, WidgetStyle.clampTransparency(percent))
             .apply()
     }
 
@@ -103,7 +105,7 @@ object Prefs {
     fun resetWidgetStyle(context: Context) {
         prefs(context).edit()
             .remove(KEY_WIDGET_THEME)
-            .remove(KEY_WIDGET_ALPHA)
+            .remove(KEY_WIDGET_TRANSPARENCY)
             .remove(KEY_WIDGET_CORNER)
             .remove(KEY_WIDGET_TEXT_SIZE)
             .remove(KEY_WIDGET_CTA)

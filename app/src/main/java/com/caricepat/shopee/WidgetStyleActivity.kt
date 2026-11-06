@@ -1,36 +1,42 @@
 package com.caricepat.shopee
 
 import android.app.Activity
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.SeekBar
 import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 
 /**
- * Pengaturan tampilan widget. Semua perubahan langsung disimpan
- * dan diterapkan ke widget yang sedang terpasang.
+ * Pengaturan tampilan widget. Setiap tema ditampilkan sebagai mini widget
+ * yang bisa diketuk. Semua perubahan langsung disimpan dan diterapkan.
  */
 class WidgetStyleActivity : Activity() {
 
+    private data class ThemeCard(
+        val container: LinearLayout,
+        val preview: View,
+        val label: TextView
+    )
+
     private lateinit var preview: View
-    private lateinit var themeGroup: RadioGroup
-    private lateinit var transparencyGroup: RadioGroup
+    private lateinit var themePreviewList: LinearLayout
+    private lateinit var transparencySeek: SeekBar
+    private lateinit var transparencyValue: TextView
     private lateinit var cornerGroup: RadioGroup
     private lateinit var textSizeGroup: RadioGroup
     private lateinit var ctaSwitch: Switch
 
-    private val themeIds = intArrayOf(
-        R.id.themeWhite, R.id.themeShopee, R.id.themeDark, R.id.themeMint
-    )
-    private val transparencyIds = intArrayOf(
-        R.id.alpha100, R.id.alpha85, R.id.alpha70, R.id.alpha50
-    )
+    private val themeCards = mutableListOf<ThemeCard>()
+
     private val cornerIds = intArrayOf(
         R.id.cornerSmall, R.id.cornerMedium, R.id.cornerLarge
     )
@@ -45,36 +51,86 @@ class WidgetStyleActivity : Activity() {
         preview = layoutInflater.inflate(R.layout.widget_search, findViewById(R.id.previewBox), false)
         findViewById<FrameLayout>(R.id.previewBox).addView(preview)
 
-        themeGroup = findViewById(R.id.themeGroup)
-        transparencyGroup = findViewById(R.id.transparencyGroup)
+        themePreviewList = findViewById(R.id.themePreviewList)
+        transparencySeek = findViewById(R.id.transparencySeek)
+        transparencyValue = findViewById(R.id.transparencyValue)
         cornerGroup = findViewById(R.id.cornerGroup)
         textSizeGroup = findViewById(R.id.textSizeGroup)
         ctaSwitch = findViewById(R.id.ctaSwitch)
 
+        buildThemeCards()
         loadCurrentValues()
         attachListeners()
-        renderPreview()
+        renderAll()
 
         findViewById<View>(R.id.btnResetStyle).setOnClickListener { resetStyle() }
     }
 
+    /** Membuat 4 pilihan tema berupa mini widget yang bisa diketuk. */
+    private fun buildThemeCards() {
+        WidgetStyle.themes.forEachIndexed { index, theme ->
+            val container = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                setBackgroundResource(R.drawable.bg_theme_unselected)
+                setPadding(dp(4), dp(4), dp(4), dp(4))
+                isClickable = true
+                isFocusable = true
+                contentDescription = getString(theme.labelRes)
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply { bottomMargin = dp(10) }
+                setOnClickListener { selectTheme(index) }
+            }
+
+            val cardPreview = layoutInflater.inflate(R.layout.widget_search, container, false)
+            container.addView(
+                cardPreview,
+                LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    dp(62)
+                )
+            )
+
+            val label = TextView(this).apply {
+                text = getString(theme.labelRes)
+                gravity = Gravity.CENTER
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f)
+                setPadding(0, dp(6), 0, dp(2))
+                setTextColor(getColor(R.color.text_primary))
+            }
+            container.addView(label)
+
+            themePreviewList.addView(container)
+            themeCards += ThemeCard(container, cardPreview, label)
+        }
+    }
+
     private fun loadCurrentValues() {
-        themeGroup.check(themeIds[Prefs.widgetTheme(this)])
-        transparencyGroup.check(transparencyIds[Prefs.widgetTransparency(this)])
+        val transparency = Prefs.widgetTransparency(this)
+        transparencySeek.progress = transparency
+        transparencyValue.text = getString(R.string.transparency_value, transparency)
+
         cornerGroup.check(cornerIds[Prefs.widgetCorner(this)])
         textSizeGroup.check(textSizeIds[Prefs.widgetTextSize(this)])
         ctaSwitch.isChecked = Prefs.showWidgetCta(this)
     }
 
     private fun attachListeners() {
-        themeGroup.onSelect { index ->
-            Prefs.setWidgetTheme(this, index)
-            onStyleChanged()
-        }
-        transparencyGroup.onSelect { index ->
-            Prefs.setWidgetTransparency(this, index)
-            onStyleChanged()
-        }
+        transparencySeek.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                transparencyValue.text = getString(R.string.transparency_value, progress)
+                Prefs.setWidgetTransparency(this@WidgetStyleActivity, progress)
+                renderPreview()
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) = Unit
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                SearchWidgetProvider.refreshAll(this@WidgetStyleActivity)
+            }
+        })
+
         cornerGroup.onSelect { index ->
             Prefs.setWidgetCorner(this, index)
             onStyleChanged()
@@ -89,41 +145,59 @@ class WidgetStyleActivity : Activity() {
         }
     }
 
+    private fun selectTheme(index: Int) {
+        Prefs.setWidgetTheme(this, index)
+        onStyleChanged()
+    }
+
     private fun onStyleChanged() {
-        renderPreview()
+        renderAll()
         SearchWidgetProvider.refreshAll(this)
     }
 
+    private fun renderAll() {
+        renderPreview()
+        renderThemeCards()
+    }
+
     private fun renderPreview() {
-        val theme = WidgetStyle.theme(Prefs.widgetTheme(this))
+        WidgetStyle.styleView(
+            preview,
+            Prefs.widgetTheme(this),
+            Prefs.widgetTransparency(this),
+            Prefs.widgetCorner(this),
+            Prefs.widgetTextSize(this),
+            Prefs.showWidgetCta(this)
+        )
+    }
 
-        preview.findViewById<ImageView>(R.id.widgetBg).apply {
-            setImageResource(WidgetStyle.cornerDrawable(Prefs.widgetCorner(this@WidgetStyleActivity)))
-            setColorFilter(theme.bg)
-            alpha = Prefs.widgetTransparency(this@WidgetStyleActivity) / 100f
-        }
-
-        preview.findViewById<ImageView>(R.id.widgetIcon).setColorFilter(theme.icon)
-
-        preview.findViewById<TextView>(R.id.widgetTitle).apply {
-            setTextColor(theme.title)
-            setTextSize(
-                TypedValue.COMPLEX_UNIT_SP,
-                WidgetStyle.titleSize(Prefs.widgetTextSize(this@WidgetStyleActivity))
+    /** Mini widget tema selalu ditampilkan pekat agar warnanya jelas. */
+    private fun renderThemeCards() {
+        val selected = Prefs.widgetTheme(this)
+        themeCards.forEachIndexed { index, card ->
+            WidgetStyle.styleView(
+                card.preview,
+                index,
+                0,
+                Prefs.widgetCorner(this),
+                Prefs.widgetTextSize(this),
+                Prefs.showWidgetCta(this)
             )
+            val isSelected = index == selected
+            card.container.setBackgroundResource(
+                if (isSelected) R.drawable.bg_theme_selected else R.drawable.bg_theme_unselected
+            )
+            card.label.setTextColor(
+                getColor(if (isSelected) R.color.brand else R.color.text_primary)
+            )
+            card.label.setTypeface(null, if (isSelected) Typeface.BOLD else Typeface.NORMAL)
         }
-        preview.findViewById<TextView>(R.id.widgetSubtitle).setTextColor(theme.subtitle)
-
-        preview.findViewById<ImageView>(R.id.widgetCtaBg).setColorFilter(theme.ctaBg)
-        preview.findViewById<TextView>(R.id.widgetCta).setTextColor(theme.ctaText)
-        preview.findViewById<View>(R.id.widgetCtaWrap).visibility =
-            if (Prefs.showWidgetCta(this)) View.VISIBLE else View.GONE
     }
 
     private fun resetStyle() {
         Prefs.resetWidgetStyle(this)
         loadCurrentValues()
-        renderPreview()
+        renderAll()
         SearchWidgetProvider.refreshAll(this)
         Toast.makeText(this, R.string.widget_style_reset_done, Toast.LENGTH_SHORT).show()
     }
@@ -134,4 +208,7 @@ class WidgetStyleActivity : Activity() {
             action(group.indexOfChild(child))
         }
     }
+
+    private fun dp(value: Int): Int =
+        (value * resources.displayMetrics.density).toInt()
 }

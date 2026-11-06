@@ -22,16 +22,33 @@ class WidgetStyleTest {
     fun invalidIndexesFallBackSafely() {
         assertEquals(WidgetStyle.themes[0], WidgetStyle.theme(-1))
         assertEquals(WidgetStyle.themes[0], WidgetStyle.theme(99))
-        assertEquals(100, WidgetStyle.transparencyPercent(99))
         assertEquals(WidgetStyle.titleSize(1), WidgetStyle.titleSize(99))
+    }
+
+    @Test
+    fun transparencyDefaultsTo25Percent() {
+        assertEquals(25, WidgetStyle.DEFAULT_TRANSPARENCY)
+    }
+
+    @Test
+    fun transparencyClampsBetween0And100() {
+        assertEquals(0, WidgetStyle.clampTransparency(-1))
+        assertEquals(0, WidgetStyle.clampTransparency(0))
+        assertEquals(100, WidgetStyle.clampTransparency(100))
+        assertEquals(100, WidgetStyle.clampTransparency(150))
+    }
+
+    @Test
+    fun transparencyMapsToBackgroundAlpha() {
+        assertEquals(255, WidgetStyle.alphaFor(0))
+        assertEquals(191, WidgetStyle.alphaFor(25))
+        assertEquals(0, WidgetStyle.alphaFor(100))
     }
 
     @Test
     fun clampsKeepValuesInRange() {
         assertEquals(0, WidgetStyle.clampTheme(-5))
         assertEquals(3, WidgetStyle.clampTheme(50))
-        assertEquals(0, WidgetStyle.clampTransparency(-1))
-        assertEquals(3, WidgetStyle.clampTransparency(9))
         assertEquals(0, WidgetStyle.clampCorner(-1))
         assertEquals(2, WidgetStyle.clampCorner(9))
         assertEquals(0, WidgetStyle.clampTitleSize(-1))

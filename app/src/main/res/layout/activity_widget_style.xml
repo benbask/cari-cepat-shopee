@@ -54,113 +54,54 @@
             android:textSize="12sp"
             android:textStyle="bold" />
 
-        <RadioGroup
-            android:id="@+id/themeGroup"
+        <LinearLayout
+            android:id="@+id/themePreviewList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:orientation="vertical">
+            android:layout_marginTop="4dp"
+            android:orientation="vertical" />
 
-            <RadioButton
-                android:id="@+id/themeWhite"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/brand"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:text="@string/theme_white"
-                android:textColor="@color/text_primary"
-                android:textSize="15sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/themeShopee"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/brand"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:text="@string/theme_shopee"
-                android:textColor="@color/text_primary"
-                android:textSize="15sp" />
+                android:layout_weight="1"
+                android:text="@string/transparency_label"
+                android:textColor="@color/text_muted"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
-            <RadioButton
-                android:id="@+id/themeDark"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/transparencyValue"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/brand"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:text="@string/theme_dark"
-                android:textColor="@color/text_primary"
-                android:textSize="15sp" />
+                android:text="@string/transparency_default"
+                android:textColor="@color/brand"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-            <RadioButton
-                android:id="@+id/themeMint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/brand"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:text="@string/theme_mint"
-                android:textColor="@color/text_primary"
-                android:textSize="15sp" />
-        </RadioGroup>
+        <SeekBar
+            android:id="@+id/transparencySeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="25"
+            android:progressTint="@color/brand"
+            android:thumbTint="@color/brand" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/transparency_label"
+            android:text="@string/transparency_hint"
             android:textColor="@color/text_muted"
-            android:textSize="12sp"
-            android:textStyle="bold" />
-
-        <RadioGroup
-            android:id="@+id/transparencyGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/alpha100"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="@color/brand"
-                android:text="@string/transparency_100"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp" />
-
-            <RadioButton
-                android:id="@+id/alpha85"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="@color/brand"
-                android:text="@string/transparency_85"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp" />
-
-            <RadioButton
-                android:id="@+id/alpha70"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="@color/brand"
-                android:text="@string/transparency_70"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp" />
-
-            <RadioButton
-                android:id="@+id/alpha50"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="@color/brand"
-                android:text="@string/transparency_50"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp" />
-        </RadioGroup>
+            android:textSize="11sp" />
 
         <TextView
             android:layout_width="match_parent"

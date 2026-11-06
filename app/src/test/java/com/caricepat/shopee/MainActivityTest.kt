@@ -3,6 +3,7 @@ package com.caricepat.shopee
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.SeekBar
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
@@ -40,6 +41,17 @@ class MainActivityTest {
     fun widgetStyleActivityOpensWithoutCrash() {
         val controller = Robolectric.buildActivity(WidgetStyleActivity::class.java).setup()
         assertNotNull(controller.get())
+    }
+
+    @Test
+    fun widgetStyleShowsFourThemeWidgetsAndSlider() {
+        val activity = Robolectric.buildActivity(WidgetStyleActivity::class.java).setup().get()
+
+        assertEquals(4, activity.findViewById<LinearLayout>(R.id.themePreviewList).childCount)
+
+        val seek = activity.findViewById<SeekBar>(R.id.transparencySeek)
+        assertEquals(100, seek.max)
+        assertEquals(WidgetStyle.DEFAULT_TRANSPARENCY, seek.progress)
     }
 
     @Test

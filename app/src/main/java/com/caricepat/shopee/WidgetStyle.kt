@@ -1,12 +1,19 @@
 package com.caricepat.shopee
 
 import android.graphics.Color
+import android.util.TypedValue
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 
 /**
  * Kumpulan tema dan preset tampilan widget.
  * Semua nilai disimpan sebagai indeks agar ringan dan mudah dibaca ulang.
  */
 object WidgetStyle {
+
+    /** Transparansi awal saat aplikasi baru dipasang, dalam persen. */
+    const val DEFAULT_TRANSPARENCY = 25
 
     data class Theme(
         val labelRes: Int,
@@ -57,9 +64,6 @@ object WidgetStyle {
         )
     )
 
-    /** Pilihan transparansi latar widget, dalam persen. */
-    val transparency = intArrayOf(100, 85, 70, 50)
-
     private val cornerDrawables = intArrayOf(
         R.drawable.bg_widget_corner_small,
         R.drawable.bg_widget_corner_medium,
@@ -71,9 +75,6 @@ object WidgetStyle {
 
     fun theme(index: Int): Theme = themes.getOrElse(index) { themes[0] }
 
-    fun transparencyPercent(index: Int): Int =
-        transparency.getOrElse(index) { transparency[0] }
-
     fun cornerDrawable(index: Int): Int =
         cornerDrawables.getOrElse(index) { cornerDrawables[1] }
 
@@ -82,9 +83,43 @@ object WidgetStyle {
 
     fun clampTheme(index: Int): Int = index.coerceIn(0, themes.lastIndex)
 
-    fun clampTransparency(index: Int): Int = index.coerceIn(0, transparency.lastIndex)
+    fun clampTransparency(percent: Int): Int = percent.coerceIn(0, 100)
 
     fun clampCorner(index: Int): Int = index.coerceIn(0, cornerDrawables.lastIndex)
 
     fun clampTitleSize(index: Int): Int = index.coerceIn(0, titleSizes.lastIndex)
+
+    /** Alpha latar widget; transparansi 0% = pekat, 100% = tembus pandang. */
+    fun alphaFor(transparency: Int): Int =
+        (100 - clampTransparency(transparency)) * 255 / 100
+
+    /** Menerapkan gaya ke tampilan widget biasa (dipakai untuk pratinjau). */
+    fun styleView(
+        root: View,
+        themeIndex: Int,
+        transparency: Int,
+        cornerIndex: Int,
+        textSizeIndex: Int,
+        showCta: Boolean
+    ) {
+        val theme = theme(themeIndex)
+
+        root.findViewById<ImageView>(R.id.widgetBg).apply {
+            setImageResource(cornerDrawable(cornerIndex))
+            setColorFilter(theme.bg)
+            alpha = alphaFor(transparency) / 255f
+        }
+        root.findViewById<ImageView>(R.id.widgetIcon).setColorFilter(theme.icon)
+
+        root.findViewById<TextView>(R.id.widgetTitle).apply {
+            setTextColor(theme.title)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, titleSize(textSizeIndex))
+        }
+        root.findViewById<TextView>(R.id.widgetSubtitle).setTextColor(theme.subtitle)
+
+        root.findViewById<ImageView>(R.id.widgetCtaBg).setColorFilter(theme.ctaBg)
+        root.findViewById<TextView>(R.id.widgetCta).setTextColor(theme.ctaText)
+        root.findViewById<View>(R.id.widgetCtaWrap).visibility =
+            if (showCta) View.VISIBLE else View.GONE
+    }
 }

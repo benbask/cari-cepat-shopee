@@ -60,10 +60,9 @@
     <string name="theme_dark">Gelap</string>
     <string name="theme_mint">Mint</string>
     <string name="transparency_label">Transparansi latar</string>
-    <string name="transparency_100">100%</string>
-    <string name="transparency_85">85%</string>
-    <string name="transparency_70">70%</string>
-    <string name="transparency_50">50%</string>
+    <string name="transparency_default">25%</string>
+    <string name="transparency_value">%1$d%%</string>
+    <string name="transparency_hint" formatted="false">0% pekat · 100% tembus pandang</string>
     <string name="corner_label">Sudut widget</string>
     <string name="corner_small">Kecil</string>
     <string name="corner_medium">Sedang</string>

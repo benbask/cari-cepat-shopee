@@ -40,7 +40,7 @@ class SearchWidgetProvider : AppWidgetProvider() {
         /** Menerapkan tema, transparansi, sudut, ukuran teks, dan tombol CTA. */
         private fun applyStyle(context: Context, views: RemoteViews) {
             val theme = WidgetStyle.theme(Prefs.widgetTheme(context))
-            val bgAlpha = Prefs.widgetTransparency(context) * 255 / 100
+            val bgAlpha = WidgetStyle.alphaFor(Prefs.widgetTransparency(context))
 
             views.setImageViewResource(
                 R.id.widgetBg,
