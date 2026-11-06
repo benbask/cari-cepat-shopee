@@ -4,6 +4,8 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -29,7 +31,7 @@ class SearchWidgetProviderTest {
         val theme = WidgetStyle.theme(2)
         assertEquals(theme.title, view.findViewById<TextView>(R.id.widgetTitle).currentTextColor)
         assertEquals(theme.subtitle, view.findViewById<TextView>(R.id.widgetSubtitle).currentTextColor)
-        assertEquals(View.GONE, view.findViewById<View>(R.id.widgetCtaWrap).visibility)
+        assertEquals(View.GONE, view.findViewById<View>(R.id.widgetCta).visibility)
     }
 
     @Test
@@ -39,10 +41,32 @@ class SearchWidgetProviderTest {
         val view = SearchWidgetProvider.buildViews(context)
             .apply(context, FrameLayout(context))
 
-        assertEquals(View.VISIBLE, view.findViewById<View>(R.id.widgetCtaWrap).visibility)
+        assertEquals(View.VISIBLE, view.findViewById<View>(R.id.widgetCta).visibility)
         assertEquals(
             WidgetStyle.theme(0).title,
             view.findViewById<TextView>(R.id.widgetTitle).currentTextColor
         )
+    }
+
+    @Test
+    fun cardIsShorterThanWidgetCell() {
+        val context = RuntimeEnvironment.getApplication()
+        val density = context.resources.displayMetrics.density
+        val cellWidth = (340 * density).toInt()
+        val cellHeight = (90 * density).toInt()
+
+        val parent = FrameLayout(context)
+        val view = SearchWidgetProvider.buildViews(context).apply(context, parent)
+        parent.addView(view)
+        parent.measure(
+            View.MeasureSpec.makeMeasureSpec(cellWidth, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(cellHeight, View.MeasureSpec.EXACTLY)
+        )
+        parent.layout(0, 0, cellWidth, cellHeight)
+
+        val background = view.findViewById<View>(R.id.widgetBg)
+        assertEquals(Math.round(54 * density), background.height)
+        assertTrue(background.top > 0)
+        assertNotNull(view.findViewById<View>(R.id.widgetCta).background)
     }
 }

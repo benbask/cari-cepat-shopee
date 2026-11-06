@@ -22,6 +22,7 @@ object WidgetStyle {
         val subtitle: Int,
         val icon: Int,
         val ctaBg: Int,
+        val ctaBgRes: Int,
         val ctaText: Int
     )
 
@@ -30,36 +31,40 @@ object WidgetStyle {
             labelRes = R.string.theme_white,
             bg = Color.parseColor("#FFFFFF"),
             title = Color.parseColor("#1C1C1E"),
-            subtitle = Color.parseColor("#8A8A8E"),
+            subtitle = Color.parseColor("#5F5F66"),
             icon = Color.parseColor("#EE4D2D"),
             ctaBg = Color.parseColor("#EE4D2D"),
+            ctaBgRes = R.drawable.bg_widget_cta,
             ctaText = Color.parseColor("#FFFFFF")
         ),
         Theme(
             labelRes = R.string.theme_shopee,
             bg = Color.parseColor("#EE4D2D"),
             title = Color.parseColor("#FFFFFF"),
-            subtitle = Color.parseColor("#FFE0D6"),
+            subtitle = Color.parseColor("#FFE6DE"),
             icon = Color.parseColor("#FFFFFF"),
             ctaBg = Color.parseColor("#FFFFFF"),
+            ctaBgRes = R.drawable.bg_widget_cta_white,
             ctaText = Color.parseColor("#EE4D2D")
         ),
         Theme(
             labelRes = R.string.theme_dark,
             bg = Color.parseColor("#1E1E22"),
             title = Color.parseColor("#FFFFFF"),
-            subtitle = Color.parseColor("#A0A0A8"),
+            subtitle = Color.parseColor("#B0B0B8"),
             icon = Color.parseColor("#FF7A5C"),
             ctaBg = Color.parseColor("#EE4D2D"),
+            ctaBgRes = R.drawable.bg_widget_cta,
             ctaText = Color.parseColor("#FFFFFF")
         ),
         Theme(
             labelRes = R.string.theme_mint,
             bg = Color.parseColor("#E9F7F0"),
             title = Color.parseColor("#123B2C"),
-            subtitle = Color.parseColor("#4F7A68"),
+            subtitle = Color.parseColor("#3F6B59"),
             icon = Color.parseColor("#1B8A4B"),
             ctaBg = Color.parseColor("#1B8A4B"),
+            ctaBgRes = R.drawable.bg_widget_cta_mint,
             ctaText = Color.parseColor("#FFFFFF")
         )
     )
@@ -117,9 +122,10 @@ object WidgetStyle {
         }
         root.findViewById<TextView>(R.id.widgetSubtitle).setTextColor(theme.subtitle)
 
-        root.findViewById<ImageView>(R.id.widgetCtaBg).setColorFilter(theme.ctaBg)
-        root.findViewById<TextView>(R.id.widgetCta).setTextColor(theme.ctaText)
-        root.findViewById<View>(R.id.widgetCtaWrap).visibility =
-            if (showCta) View.VISIBLE else View.GONE
+        root.findViewById<TextView>(R.id.widgetCta).apply {
+            setBackgroundResource(theme.ctaBgRes)
+            setTextColor(theme.ctaText)
+            visibility = if (showCta) View.VISIBLE else View.GONE
+        }
     }
 }

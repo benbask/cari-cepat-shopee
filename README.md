@@ -20,7 +20,7 @@ Total: 1 ketukan + mengetik. Tidak ada tab video, tidak ada banner, hemat waktu/
 
 ## Fitur
 
-- Widget 4x1 bergaya kolom pencarian.
+- Widget 4x1 ringkas, tinggi kartu sekitar 54dp (mirip search bar Google).
 - Kustomisasi tampilan widget (v1.4+): 4 tema berupa mini widget yang bisa diketuk (Putih, Oranye Shopee, Gelap, Mint), slider transparansi 0–100%, sudut kecil/sedang/besar, ukuran teks, dan tombol Cari bisa disembunyikan. Ada pratinjau langsung di aplikasi.
 - Riwayat pencarian (bisa dimatikan, hanya lokal di perangkat).
 - Tombol "Pasang widget" langsung dari aplikasi (Android 8+).

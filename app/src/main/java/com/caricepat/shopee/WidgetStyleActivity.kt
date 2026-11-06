@@ -88,7 +88,7 @@ class WidgetStyleActivity : Activity() {
                 cardPreview,
                 LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
-                    dp(62)
+                    dp(58)
                 )
             )
 

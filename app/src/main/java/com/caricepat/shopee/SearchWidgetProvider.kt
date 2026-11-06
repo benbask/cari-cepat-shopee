@@ -58,10 +58,10 @@ class SearchWidgetProvider : AppWidgetProvider() {
             )
             views.setTextColor(R.id.widgetSubtitle, theme.subtitle)
 
-            views.setInt(R.id.widgetCtaBg, "setColorFilter", theme.ctaBg)
+            views.setInt(R.id.widgetCta, "setBackgroundResource", theme.ctaBgRes)
             views.setTextColor(R.id.widgetCta, theme.ctaText)
             views.setViewVisibility(
-                R.id.widgetCtaWrap,
+                R.id.widgetCta,
                 if (Prefs.showWidgetCta(context)) View.VISIBLE else View.GONE
             )
         }

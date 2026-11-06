@@ -6,6 +6,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import android.graphics.Color
+import kotlin.math.abs
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [34])
@@ -54,4 +56,25 @@ class WidgetStyleTest {
         assertEquals(0, WidgetStyle.clampTitleSize(-1))
         assertEquals(2, WidgetStyle.clampTitleSize(9))
     }
+
+    @Test
+    fun everyThemeKeepsTextReadableAgainstItsBackground() {
+        WidgetStyle.themes.forEach { theme ->
+            assertTrue(
+                "Judul harus kontras dengan latar",
+                luminanceGap(theme.title, theme.bg) > 0.25
+            )
+            assertTrue(
+                "Subjudul harus kontras dengan latar",
+                luminanceGap(theme.subtitle, theme.bg) > 0.25
+            )
+            assertTrue(
+                "Teks tombol harus kontras dengan tombol",
+                luminanceGap(theme.ctaText, theme.ctaBg) > 0.25
+            )
+        }
+    }
+
+    private fun luminanceGap(first: Int, second: Int): Double =
+        abs(Color.luminance(first) - Color.luminance(second)).toDouble()
 }

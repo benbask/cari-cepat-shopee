@@ -7,25 +7,25 @@
     <ImageView
         android:id="@+id/widgetBg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="54dp"
+        android:layout_gravity="center_vertical"
         android:contentDescription="@null"
         android:scaleType="fitXY"
         android:src="@drawable/bg_widget_corner_medium" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="54dp"
+        android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="8dp">
+        android:paddingEnd="10dp">
 
         <ImageView
             android:id="@+id/widgetIcon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:contentDescription="@null"
             android:src="@drawable/ic_search" />
 
@@ -40,6 +40,7 @@
                 android:id="@+id/widgetTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
                 android:text="@string/widget_text"
                 android:textColor="@color/text_primary"
                 android:textSize="15sp"
@@ -57,34 +58,20 @@
 
         </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/widgetCtaWrap"
+        <TextView
+            android:id="@+id/widgetCta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp">
-
-            <ImageView
-                android:id="@+id/widgetCtaBg"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@null"
-                android:scaleType="fitXY"
-                android:src="@drawable/bg_widget_cta_white" />
-
-            <TextView
-                android:id="@+id/widgetCta"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="14dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="14dp"
-                android:paddingBottom="8dp"
-                android:text="@string/widget_cta"
-                android:textColor="@color/white"
-                android:textSize="13sp"
-                android:textStyle="bold" />
-
-        </FrameLayout>
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_widget_cta"
+            android:paddingStart="14dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="14dp"
+            android:paddingBottom="8dp"
+            android:text="@string/widget_cta"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
