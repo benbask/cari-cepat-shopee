@@ -128,6 +128,19 @@
             android:layout_marginTop="16dp"
             android:text="@string/try_search" />
 
+        <TextView
+            android:id="@+id/linkDiagnostics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/link_tester_open"
+            android:textColor="@color/brand"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
         <LinearLayout style="@style/Card">
 
             <TextView

@@ -10,10 +10,10 @@ import android.widget.Toast
 /**
  * Membuka halaman pencarian di aplikasi Shopee Indonesia.
  *
- * Strategi berlapis:
- * 1. Skema deeplink internal Shopee (paling cepat, langsung ke halaman pencarian).
- * 2. App Link https://shopee.co.id/search?... yang dipaksa ke paket Shopee.
- * 3. Fallback ke aplikasi Shopee, browser, atau Play Store.
+ * Shopee tidak menyediakan dokumentasi resmi untuk tautan pencarian. Karena itu
+ * beberapa format dicoba berurutan, mulai dari rute internal React Native
+ * (`apprl`) sampai tautan https biasa. Jika semuanya gagal, kata kunci disalin
+ * ke clipboard lalu aplikasi Shopee dibuka.
  */
 object ShopeeLauncher {
 
@@ -25,6 +25,13 @@ object ShopeeLauncher {
         data object Failed : Result()
     }
 
+    data class Method(
+        val label: String,
+        val uri: String,
+        val forcePackage: String? = null,
+        val isControl: Boolean = false
+    )
+
     fun isShopeeInstalled(context: Context): Boolean = try {
         context.packageManager.getPackageInfo(SHOPEE_PACKAGE, 0)
         true
@@ -32,12 +39,32 @@ object ShopeeLauncher {
         false
     }
 
-    private fun searchCandidates(query: String): List<Uri> {
-        val encoded = Uri.encode(query.trim())
+    /**
+     * Daftar kandidat tautan. Dipakai juga oleh layar uji tautan di MainActivity.
+     */
+    fun methods(query: String): List<Method> {
+        val q = Uri.encode(query.trim())
+        val web = "https://shopee.co.id/search?keyword=$q"
+
+        fun apprl(label: String, route: String, params: String = ""): Method {
+            val inner = route + if (params.isEmpty()) "" else "?$params"
+            return Method(
+                label,
+                "shopeeid://main?apprl=" + Uri.encode(inner)
+            )
+        }
+
         return listOf(
-            Uri.parse("shopeeid://search?keyword=$encoded"),
-            Uri.parse("shopee://search?keyword=$encoded"),
-            Uri.parse("https://shopee.co.id/search?keyword=$encoded")
+            apprl("1 · apprl search-result + keyword", "/rn/@shopee-rn/search-result/SEARCH_RESULT", "keyword=$q"),
+            apprl("2 · apprl search-result + tipe GLOBAL", "/rn/@shopee-rn/search-result/SEARCH_RESULT", "keyword=$q&searchPageType=GLOBAL"),
+            apprl("3 · apprl search-result tanpa garis miring", "rn/@shopee-rn/search-result/SEARCH_RESULT", "keyword=$q"),
+            apprl("4 · apprl PRE_SEARCH", "/rn/@shopee-rn/search/PRE_SEARCH", "keyword=$q"),
+            apprl("5 · apprl SEARCH_RESULT", "/rn/SEARCH_RESULT", "keyword=$q"),
+            Method("6 · shopeeid://search + tipe GLOBAL", "shopeeid://search?keyword=$q&searchPageType=GLOBAL"),
+            Method("7 · shopeeid://search (lama)", "shopeeid://search?keyword=$q"),
+            Method("8 · shopee://search", "shopee://search?keyword=$q"),
+            Method("9 · https shopee.co.id (paksa app)", web, SHOPEE_PACKAGE),
+            Method("10 · shopeeid://home (kontrol)", "shopeeid://home", isControl = true)
         )
     }
 
@@ -45,32 +72,34 @@ object ShopeeLauncher {
         val appContext = context.applicationContext
         val installed = isShopeeInstalled(appContext)
 
-        // 1 & 2: pakai intent yang benar-benar diresolusi oleh paket Shopee.
-        for (uri in searchCandidates(query)) {
-            val intent = Intent(Intent.ACTION_VIEW, uri)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            if (resolvedToShopee(appContext, intent) && start(appContext, intent)) {
-                return Result.Success(uri.toString())
+        // Selalu salin kata kunci: berguna jika Shopee hanya membuka beranda.
+        copyToClipboard(appContext, query)
+
+        val allMethods = methods(query)
+        val preferred = Prefs.preferredMethod(appContext)
+        val ordered = if (preferred in allMethods.indices) {
+            listOf(allMethods[preferred]) + allMethods.filterIndexed { index, _ -> index != preferred }
+        } else {
+            allMethods
+        }
+
+        for (method in ordered) {
+            if (method.isControl) continue
+            val intent = buildIntent(method) ?: continue
+
+            val canOpen = if (method.forcePackage != null) {
+                installed
+            } else {
+                resolvedToShopee(appContext, intent)
+            }
+            if (canOpen && start(appContext, intent)) {
+                return Result.Success(method.uri)
             }
         }
 
-        // 3: paksa App Link https ke paket Shopee (beberapa versi hanya mendaftarkan https).
         if (installed) {
-            val forced = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://shopee.co.id/search?keyword=" + Uri.encode(query.trim()))
-            )
-                .setPackage(SHOPEE_PACKAGE)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            if (start(appContext, forced)) {
-                return Result.Success(forced.data.toString())
-            }
-
-            // Shopee terpasang tetapi tidak menerima tautan pencarian: buka aplikasinya
-            // dan salin kata kunci agar bisa ditempel manual.
             val openApp = appContext.packageManager.getLaunchIntentForPackage(SHOPEE_PACKAGE)
             if (openApp != null) {
-                copyToClipboard(appContext, query)
                 if (start(appContext, openApp)) {
                     Toast.makeText(
                         appContext,
@@ -84,8 +113,26 @@ object ShopeeLauncher {
 
         // Shopee belum terpasang: buka Play Store agar pengguna bisa memasangnya.
         val openedStore = openStore(appContext)
-        copyToClipboard(appContext, query)
         return Result.NotInstalled(openedStore)
+    }
+
+    /**
+     * Menjalankan satu metode tertentu (dipakai layar diagnostik).
+     */
+    fun launchMethod(context: Context, method: Method): Boolean {
+        val intent = buildIntent(method) ?: return false
+        return start(context.applicationContext, intent)
+    }
+
+    private fun buildIntent(method: Method): Intent? = try {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(method.uri))
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        if (method.forcePackage != null) {
+            intent.setPackage(method.forcePackage)
+        }
+        intent
+    } catch (e: Exception) {
+        null
     }
 
     private fun resolvedToShopee(context: Context, intent: Intent): Boolean {

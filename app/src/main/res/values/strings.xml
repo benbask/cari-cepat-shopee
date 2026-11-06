@@ -51,4 +51,25 @@
 
     <string name="disclaimer">Aplikasi tidak resmi dan tidak berafiliasi dengan Shopee. Hanya membuka tautan pencarian milik Shopee.</string>
     <string name="privacy_note">Riwayat hanya disimpan di perangkat ini.</string>
+
+    <string name="link_tester_open">Tautan tidak membuka hasil pencarian? Uji format lain di sini</string>
+    <string name="link_tester_title">Uji tautan Shopee</string>
+    <string name="link_tester_message">Kata kunci uji: “%1$s”. Ketuk satu per satu sampai hasil pencarian muncul, lalu catat nomor yang berhasil.</string>
+    <string name="link_tester_opened">Mencoba: %1$s</string>
+    <string name="link_tester_failed">Gagal membuka: %1$s</string>
+    <string name="link_tester_confirm_title">Apakah hasil pencarian muncul?</string>
+    <string name="link_tester_confirm_message">Metode: %1$s\n\nJika ya, metode ini akan dipakai otomatis untuk pencarian berikutnya.</string>
+    <string name="link_tester_yes">Ya, simpan</string>
+    <string name="link_tester_no">Tidak</string>
+    <string name="link_tester_saved">Metode pencarian disimpan.</string>
+    <string name="link_tester_forget">Lupakan pilihan</string>
+    <string name="link_tester_forgotten">Pilihan metode dihapus.</string>
+
+    <string name="crash_title">Aplikasi gagal dibuka</string>
+    <string name="crash_explanation">Detail teknis di bawah bisa disalin dan dikirim ke pengembang. Tekan “Coba lagi” untuk membuka aplikasi seperti biasa.</string>
+    <string name="crash_copy">Salin detail error</string>
+    <string name="crash_retry">Coba lagi</string>
+    <string name="crash_copied">Detail error disalin ke clipboard.</string>
+    <string name="crash_copy_failed">Gagal menyalin detail error.</string>
+    <string name="close">Tutup</string>
 </resources>

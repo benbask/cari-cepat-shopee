@@ -10,6 +10,7 @@ object Prefs {
     private const val FILE = "cari_cepat"
     private const val KEY_RECENT = "recent"
     private const val KEY_HISTORY = "history_enabled"
+    private const val KEY_METHOD = "preferred_method"
     private const val SEPARATOR = "\u0001"
     private const val MAX_RECENT = 8
 
@@ -43,5 +44,13 @@ object Prefs {
 
     fun clearRecent(context: Context) {
         prefs(context).edit().remove(KEY_RECENT).apply()
+    }
+
+    /** Indeks metode deep link yang dipilih pengguna, atau -1 jika belum ada. */
+    fun preferredMethod(context: Context): Int =
+        prefs(context).getInt(KEY_METHOD, -1)
+
+    fun setPreferredMethod(context: Context, index: Int) {
+        prefs(context).edit().putInt(KEY_METHOD, index).apply()
     }
 }
