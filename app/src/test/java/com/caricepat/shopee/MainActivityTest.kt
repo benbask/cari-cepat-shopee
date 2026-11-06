@@ -1,5 +1,8 @@
 package com.caricepat.shopee
 
+import android.app.Activity
+import android.appwidget.AppWidgetManager
+import android.content.Intent
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
@@ -10,6 +13,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
+import org.robolectric.Shadows
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
@@ -63,6 +68,24 @@ class MainActivityTest {
         assertEquals(
             activity.getString(R.string.widget_style_button),
             button.text.toString()
+        )
+    }
+
+    @Test
+    fun widgetStyleActivityReturnsWidgetIdWhenOpenedFromWidget() {
+        val context = RuntimeEnvironment.getApplication()
+        val intent = Intent(context, WidgetStyleActivity::class.java)
+            .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 42)
+
+        val activity = Robolectric.buildActivity(WidgetStyleActivity::class.java, intent)
+            .setup()
+            .get()
+        val shadow = Shadows.shadowOf(activity)
+
+        assertEquals(Activity.RESULT_OK, shadow.resultCode)
+        assertEquals(
+            42,
+            shadow.resultIntent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
         )
     }
 }

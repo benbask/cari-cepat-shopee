@@ -1,6 +1,8 @@
 package com.caricepat.shopee
 
 import android.app.Activity
+import android.appwidget.AppWidgetManager
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.TypedValue
@@ -44,8 +46,24 @@ class WidgetStyleActivity : Activity() {
         R.id.sizeSmall, R.id.sizeNormal, R.id.sizeLarge
     )
 
+    private var configWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Saat dibuka dari menu long-press widget, kembalikan ID widget agar
+        // launcher tahu konfigurasi selesai.
+        configWidgetId = intent.getIntExtra(
+            AppWidgetManager.EXTRA_APPWIDGET_ID,
+            AppWidgetManager.INVALID_APPWIDGET_ID
+        )
+        if (configWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+            setResult(
+                RESULT_OK,
+                Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, configWidgetId)
+            )
+        }
+
         setContentView(R.layout.activity_widget_style)
 
         preview = layoutInflater.inflate(R.layout.widget_search, findViewById(R.id.previewBox), false)

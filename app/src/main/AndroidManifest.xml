@@ -46,7 +46,7 @@
 
         <activity
             android:name=".WidgetStyleActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/widget_style_title" />
 
         <receiver
