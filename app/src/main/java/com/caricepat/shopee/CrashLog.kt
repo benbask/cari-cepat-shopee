@@ -53,8 +53,32 @@ object CrashLog {
         file(context).writeText(header + writer.toString())
     }
 
-    fun read(context: Context): String? =
-        file(context).takeIf { it.exists() }?.readText()?.takeIf { it.isNotBlank() }
+    fun read(context: Context): String? {
+        val f = file(context)
+        if (!f.exists()) return null
+        val text = try {
+            f.readText()
+        } catch (e: Exception) {
+            return null
+        }
+        if (text.isBlank()) return null
+
+        // Jangan tampilkan crash dari versi lama: setelah pembaruan aplikasi,
+        // laporan lama bisa membuat seolah-olah versi baru masih crash.
+        val storedVersion = Regex("^Versi\\s*:\\s*(.+)$", RegexOption.MULTILINE)
+            .find(text)?.groupValues?.get(1)?.trim()
+        val currentVersion = try {
+            context.packageManager.getPackageInfo(context.packageName, 0).versionName
+        } catch (e: Exception) {
+            null
+        }
+        if (storedVersion != null && currentVersion != null && storedVersion != currentVersion) {
+            f.delete()
+            return null
+        }
+
+        return text
+    }
 
     fun clear(context: Context) {
         file(context).delete()
