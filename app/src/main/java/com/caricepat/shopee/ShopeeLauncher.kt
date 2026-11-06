@@ -41,29 +41,54 @@ object ShopeeLauncher {
 
     /**
      * Daftar kandidat tautan. Dipakai juga oleh layar uji tautan di MainActivity.
+     *
+     * Urutan sengaja dimulai dari tautan universal `https://shopee.co.id/search`.
+     * Tautan itu ditangani ProxyActivity Shopee (tanpa batasan path), jadi paling
+     * stabil untuk membuka halaman hasil pencarian. Kandidat `apprl` di bawahnya
+     * memakai rute internal yang ditemukan di kode Shopee:
+     * `rn/@shopee-rn/search/SEARCH_RESULT` dengan `searchPageType=GLOBAL` dan
+     * `searchParams` berisi kata kunci.
      */
     fun methods(query: String): List<Method> {
-        val q = Uri.encode(query.trim())
-        val web = "https://shopee.co.id/search?keyword=$q"
+        val q = query.trim()
+        val enc = Uri.encode(q)
+        val web = "https://shopee.co.id/search?keyword=$enc"
 
-        fun apprl(label: String, route: String, params: String = ""): Method {
-            val inner = route + if (params.isEmpty()) "" else "?$params"
-            return Method(
-                label,
-                "shopeeid://main?apprl=" + Uri.encode(inner)
-            )
-        }
+        val escaped = q.replace("\\", "\\\\").replace("\"", "\\\"")
+        val paramsJson = Uri.encode("{\"keyword\":\"$escaped\"}")
+
+        fun apprl(label: String, route: String): Method =
+            Method(label, "shopeeid://home?apprl=" + Uri.encode(route))
 
         return listOf(
-            apprl("1 · apprl search-result + keyword", "/rn/@shopee-rn/search-result/SEARCH_RESULT", "keyword=$q"),
-            apprl("2 · apprl search-result + tipe GLOBAL", "/rn/@shopee-rn/search-result/SEARCH_RESULT", "keyword=$q&searchPageType=GLOBAL"),
-            apprl("3 · apprl search-result tanpa garis miring", "rn/@shopee-rn/search-result/SEARCH_RESULT", "keyword=$q"),
-            apprl("4 · apprl PRE_SEARCH", "/rn/@shopee-rn/search/PRE_SEARCH", "keyword=$q"),
-            apprl("5 · apprl SEARCH_RESULT", "/rn/SEARCH_RESULT", "keyword=$q"),
-            Method("6 · shopeeid://search + tipe GLOBAL", "shopeeid://search?keyword=$q&searchPageType=GLOBAL"),
-            Method("7 · shopeeid://search (lama)", "shopeeid://search?keyword=$q"),
-            Method("8 · shopee://search", "shopee://search?keyword=$q"),
-            Method("9 · https shopee.co.id (paksa app)", web, SHOPEE_PACKAGE),
+            Method("1 · https shopee.co.id/search (paling andal)", web, SHOPEE_PACKAGE),
+            apprl(
+                "2 · apprl search/SEARCH_RESULT + keyword",
+                "rn/@shopee-rn/search/SEARCH_RESULT?keyword=$enc&searchPageType=GLOBAL"
+            ),
+            apprl(
+                "3 · apprl search/SEARCH_RESULT + searchParams",
+                "rn/@shopee-rn/search/SEARCH_RESULT?searchPageType=GLOBAL" +
+                    "&searchParams=$paramsJson&searchEntranceTracking=homepage_trending_search"
+            ),
+            apprl(
+                "4 · apprl DRE searchModule + SEARCH_RESULT",
+                "dre/searchModule?pageKey=SEARCH_RESULT&searchPageType=GLOBAL&searchParams=$paramsJson"
+            ),
+            apprl(
+                "5 · apprl legacy search-result + searchParams",
+                "rn/@shopee-rn/search-result/SEARCH_RESULT?searchPageType=GLOBAL&searchParams=$paramsJson"
+            ),
+            apprl(
+                "6 · apprl legacy search-result + keyword",
+                "rn/@shopee-rn/search-result/SEARCH_RESULT?keyword=$enc"
+            ),
+            apprl(
+                "7 · apprl PRE_SEARCH + keyword",
+                "rn/@shopee-rn/search/PRE_SEARCH?keyword=$enc"
+            ),
+            Method("8 · shopeeid://search + keyword", "shopeeid://search?keyword=$enc"),
+            Method("9 · shopee://search + keyword", "shopee://search?keyword=$enc"),
             Method("10 · shopeeid://home (kontrol)", "shopeeid://home", isControl = true)
         )
     }

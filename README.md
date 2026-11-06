@@ -25,8 +25,8 @@ Total: 1 ketukan + mengetik. Tidak ada tab video, tidak ada banner, hemat waktu/
 - Tombol "Pasang widget" langsung dari aplikasi (Android 8+).
 - Deteksi Shopee terpasang; jika tidak ada, kata kunci disalin dan Play Store dibuka.
 - Kata kunci selalu disalin ke clipboard sebagai cadangan.
-- Strategi deep link berlapis: rute internal `shopeeid://main?apprl=…` → `shopeeid://search?…` → `shopee://search?…` → App Link `https://shopee.co.id/search?…`.
-- Alat uji tautan bawaan (v1.1) untuk mencoba 10 format tautan satu per satu; metode yang berhasil bisa disimpan sebagai default.
+- Strategi deep link berlapis (v1.2): App Link `https://shopee.co.id/search?…` lebih dulu, lalu rute internal `shopeeid://home?apprl=rn/@shopee-rn/search/SEARCH_RESULT` dengan `searchPageType=GLOBAL` + `searchParams`, lalu varian `search-result`, `PRE_SEARCH`, dan `shopeeid://search`.
+- Alat uji tautan bawaan (v1.1+) untuk mencoba 10 format tautan satu per satu; metode yang berhasil bisa disimpan sebagai default.
 
 ## Jika aplikasi gagal dibuka (v1.1+)
 
@@ -38,7 +38,7 @@ Mulai v1.1, aplikasi menangkap error dan menampilkannya di layar:
 
 ## Jika pencarian tidak muncul
 
-Buka aplikasi → ketuk **"Tautan tidak membuka hasil pencarian? Uji format lain di sini"**. Coba nomor 1–10 satu per satu. Setelah kembali ke aplikasi, jawab **"Ya, simpan"** pada metode yang berhasil — metode itu akan dipakai otomatis untuk pencarian berikutnya (ditandai ★).
+Buka aplikasi → ketuk **"Tautan tidak membuka hasil pencarian? Uji format lain di sini"**. Mulai dari nomor 1 (App Link https), lalu nomor 2–7 (rute internal). Setelah kembali ke aplikasi, jawab **"Ya, simpan"** pada metode yang membuka halaman hasil pencarian — metode itu akan dipakai otomatis untuk pencarian berikutnya (ditandai ★).
 
 ## Build
 
