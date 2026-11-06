@@ -10,7 +10,7 @@
 
     <string name="widget_card_title">Widget layar utama</string>
     <string name="widget_card_desc">Widget kecil berbentuk kolom pencarian. Sekali ketuk, keyboard langsung siap.</string>
-    <string name="pin_widget">Pasang widget di layar utama</string>
+    <string name="pin_widget">Tambah widget ke layar utama</string>
     <string name="pin_manual">Tahan layar utama → Widget → pilih “Cari Cepat Shopee”.</string>
     <string name="widget_installed">Widget sudah terpasang ✓</string>
     <string name="widget_not_installed">Widget belum terpasang.</string>

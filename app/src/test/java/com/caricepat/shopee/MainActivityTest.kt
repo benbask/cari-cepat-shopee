@@ -1,5 +1,9 @@
 package com.caricepat.shopee
 
+import android.view.View
+import android.widget.Button
+import android.widget.LinearLayout
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,5 +25,14 @@ class MainActivityTest {
     fun searchActivityOpensWithoutCrash() {
         val controller = Robolectric.buildActivity(SearchActivity::class.java).setup()
         assertNotNull(controller.get())
+    }
+
+    @Test
+    fun widgetCardIsVerticalAndShowsAddWidgetButton() {
+        val activity = Robolectric.buildActivity(MainActivity::class.java).setup().get()
+        val button = activity.findViewById<Button>(R.id.btnPinWidget)
+
+        assertEquals(View.VISIBLE, button.visibility)
+        assertEquals(LinearLayout.VERTICAL, (button.parent as LinearLayout).orientation)
     }
 }
