@@ -16,6 +16,7 @@ object Prefs {
     private const val KEY_WIDGET_CORNER = "widget_corner"
     private const val KEY_WIDGET_TEXT_SIZE = "widget_text_size"
     private const val KEY_WIDGET_CTA = "widget_cta"
+    private const val KEY_WIDGET_CART = "widget_cart"
     private const val SEPARATOR = "\u0001"
     private const val MAX_RECENT = 8
 
@@ -102,6 +103,13 @@ object Prefs {
         prefs(context).edit().putBoolean(KEY_WIDGET_CTA, show).apply()
     }
 
+    fun showWidgetCart(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_WIDGET_CART, true)
+
+    fun setShowWidgetCart(context: Context, show: Boolean) {
+        prefs(context).edit().putBoolean(KEY_WIDGET_CART, show).apply()
+    }
+
     fun resetWidgetStyle(context: Context) {
         prefs(context).edit()
             .remove(KEY_WIDGET_THEME)
@@ -109,6 +117,7 @@ object Prefs {
             .remove(KEY_WIDGET_CORNER)
             .remove(KEY_WIDGET_TEXT_SIZE)
             .remove(KEY_WIDGET_CTA)
+            .remove(KEY_WIDGET_CART)
             .apply()
     }
 }

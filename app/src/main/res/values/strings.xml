@@ -48,6 +48,8 @@
     <string name="widget_text">Cari di Shopee</string>
     <string name="widget_subtitle">Ketuk untuk mencari</string>
     <string name="widget_cta">Cari</string>
+    <string name="cart_button_desc">Buka keranjang Shopee</string>
+    <string name="cart_open_app_manually">Keranjang belum bisa dibuka langsung. Silakan buka tab Keranjang di aplikasi Shopee.</string>
     <string name="widget_desc">Kolom pencarian Shopee</string>
 
     <string name="widget_style_button">Atur tampilan widget</string>
@@ -72,6 +74,7 @@
     <string name="size_normal">Normal</string>
     <string name="size_large">Besar</string>
     <string name="show_cta">Tampilkan tombol “Cari”</string>
+    <string name="show_cart">Tampilkan tombol keranjang</string>
     <string name="widget_style_reset">Atur ulang tampilan</string>
     <string name="widget_style_reset_done">Tampilan widget diatur ulang.</string>
 

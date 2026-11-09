@@ -40,6 +40,7 @@
                 android:id="@+id/widgetTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/widget_text"
                 android:textColor="@color/text_primary"
@@ -51,12 +52,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
+                android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/widget_subtitle"
                 android:textColor="@color/text_muted"
                 android:textSize="11sp" />
 
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/widgetCart"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="4dp"
+            android:contentDescription="@string/cart_button_desc"
+            android:padding="6dp"
+            android:src="@drawable/ic_cart" />
 
         <TextView
             android:id="@+id/widgetCta"

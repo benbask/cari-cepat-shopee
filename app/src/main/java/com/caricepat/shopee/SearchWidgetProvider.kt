@@ -34,10 +34,18 @@ class SearchWidgetProvider : AppWidgetProvider() {
             val flags = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             val pendingIntent = PendingIntent.getActivity(context, 0, intent, flags)
             views.setOnClickPendingIntent(R.id.widgetRoot, pendingIntent)
+
+            // Tombol keranjang punya aksi sendiri, tidak membuka dialog pencarian.
+            val cartIntent = Intent(context, CartActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            }
+            val cartPendingIntent = PendingIntent.getActivity(context, 1, cartIntent, flags)
+            views.setOnClickPendingIntent(R.id.widgetCart, cartPendingIntent)
+
             return views
         }
 
-        /** Menerapkan tema, transparansi, sudut, ukuran teks, dan tombol CTA. */
+        /** Menerapkan tema, transparansi, sudut, ukuran teks, dan tombol. */
         private fun applyStyle(context: Context, views: RemoteViews) {
             val theme = WidgetStyle.theme(Prefs.widgetTheme(context))
             val bgAlpha = WidgetStyle.alphaFor(Prefs.widgetTransparency(context))
@@ -50,6 +58,12 @@ class SearchWidgetProvider : AppWidgetProvider() {
             views.setInt(R.id.widgetBg, "setAlpha", bgAlpha)
 
             views.setInt(R.id.widgetIcon, "setColorFilter", theme.icon)
+            views.setInt(R.id.widgetCart, "setColorFilter", theme.icon)
+            views.setViewVisibility(
+                R.id.widgetCart,
+                if (Prefs.showWidgetCart(context)) View.VISIBLE else View.GONE
+            )
+
             views.setTextColor(R.id.widgetTitle, theme.title)
             views.setTextViewTextSize(
                 R.id.widgetTitle,

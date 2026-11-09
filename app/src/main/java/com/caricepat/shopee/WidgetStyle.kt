@@ -105,7 +105,8 @@ object WidgetStyle {
         transparency: Int,
         cornerIndex: Int,
         textSizeIndex: Int,
-        showCta: Boolean
+        showCta: Boolean,
+        showCart: Boolean
     ) {
         val theme = theme(themeIndex)
 
@@ -115,6 +116,10 @@ object WidgetStyle {
             alpha = alphaFor(transparency) / 255f
         }
         root.findViewById<ImageView>(R.id.widgetIcon).setColorFilter(theme.icon)
+        root.findViewById<ImageView>(R.id.widgetCart).apply {
+            setColorFilter(theme.icon)
+            visibility = if (showCart) View.VISIBLE else View.GONE
+        }
 
         root.findViewById<TextView>(R.id.widgetTitle).apply {
             setTextColor(theme.title)

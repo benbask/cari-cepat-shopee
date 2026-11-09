@@ -42,10 +42,22 @@ class SearchWidgetProviderTest {
             .apply(context, FrameLayout(context))
 
         assertEquals(View.VISIBLE, view.findViewById<View>(R.id.widgetCta).visibility)
+        assertEquals(View.VISIBLE, view.findViewById<View>(R.id.widgetCart).visibility)
         assertEquals(
             WidgetStyle.theme(0).title,
             view.findViewById<TextView>(R.id.widgetTitle).currentTextColor
         )
+    }
+
+    @Test
+    fun hidesCartWhenPreferenceIsDisabled() {
+        val context = RuntimeEnvironment.getApplication()
+        Prefs.setShowWidgetCart(context, false)
+
+        val view = SearchWidgetProvider.buildViews(context)
+            .apply(context, FrameLayout(context))
+
+        assertEquals(View.GONE, view.findViewById<View>(R.id.widgetCart).visibility)
     }
 
     @Test

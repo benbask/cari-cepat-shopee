@@ -36,6 +36,7 @@ class WidgetStyleActivity : Activity() {
     private lateinit var cornerGroup: RadioGroup
     private lateinit var textSizeGroup: RadioGroup
     private lateinit var ctaSwitch: Switch
+    private lateinit var cartSwitch: Switch
 
     private val themeCards = mutableListOf<ThemeCard>()
 
@@ -75,6 +76,7 @@ class WidgetStyleActivity : Activity() {
         cornerGroup = findViewById(R.id.cornerGroup)
         textSizeGroup = findViewById(R.id.textSizeGroup)
         ctaSwitch = findViewById(R.id.ctaSwitch)
+        cartSwitch = findViewById(R.id.cartSwitch)
 
         buildThemeCards()
         loadCurrentValues()
@@ -132,6 +134,7 @@ class WidgetStyleActivity : Activity() {
         cornerGroup.check(cornerIds[Prefs.widgetCorner(this)])
         textSizeGroup.check(textSizeIds[Prefs.widgetTextSize(this)])
         ctaSwitch.isChecked = Prefs.showWidgetCta(this)
+        cartSwitch.isChecked = Prefs.showWidgetCart(this)
     }
 
     private fun attachListeners() {
@@ -161,6 +164,10 @@ class WidgetStyleActivity : Activity() {
             Prefs.setShowWidgetCta(this, checked)
             onStyleChanged()
         }
+        cartSwitch.setOnCheckedChangeListener { _, checked ->
+            Prefs.setShowWidgetCart(this, checked)
+            onStyleChanged()
+        }
     }
 
     private fun selectTheme(index: Int) {
@@ -185,7 +192,8 @@ class WidgetStyleActivity : Activity() {
             Prefs.widgetTransparency(this),
             Prefs.widgetCorner(this),
             Prefs.widgetTextSize(this),
-            Prefs.showWidgetCta(this)
+            Prefs.showWidgetCta(this),
+            Prefs.showWidgetCart(this)
         )
     }
 
@@ -199,7 +207,8 @@ class WidgetStyleActivity : Activity() {
                 0,
                 Prefs.widgetCorner(this),
                 Prefs.widgetTextSize(this),
-                Prefs.showWidgetCta(this)
+                Prefs.showWidgetCta(this),
+                Prefs.showWidgetCart(this)
             )
             val isSelected = index == selected
             card.container.setBackgroundResource(

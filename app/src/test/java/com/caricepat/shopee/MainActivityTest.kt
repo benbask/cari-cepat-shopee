@@ -7,8 +7,10 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.SeekBar
+import android.widget.Switch
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
@@ -30,6 +32,12 @@ class MainActivityTest {
     @Test
     fun searchActivityOpensWithoutCrash() {
         val controller = Robolectric.buildActivity(SearchActivity::class.java).setup()
+        assertNotNull(controller.get())
+    }
+
+    @Test
+    fun cartActivityOpensWithoutCrash() {
+        val controller = Robolectric.buildActivity(CartActivity::class.java).setup()
         assertNotNull(controller.get())
     }
 
@@ -57,6 +65,7 @@ class MainActivityTest {
         val seek = activity.findViewById<SeekBar>(R.id.transparencySeek)
         assertEquals(100, seek.max)
         assertEquals(WidgetStyle.DEFAULT_TRANSPARENCY, seek.progress)
+        assertTrue(activity.findViewById<Switch>(R.id.cartSwitch).isChecked)
     }
 
     @Test

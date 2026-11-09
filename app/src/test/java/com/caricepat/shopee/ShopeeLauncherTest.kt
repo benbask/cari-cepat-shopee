@@ -45,4 +45,14 @@ class ShopeeLauncherTest {
 
         assertEquals(listOf(9), methods.indices.filter { methods[it].isControl })
     }
+
+    @Test
+    fun cartMethodsStartWithShopeeAppLink() {
+        val methods = ShopeeLauncher.cartMethods()
+
+        assertEquals(5, methods.size)
+        assertEquals(ShopeeLauncher.SHOPEE_PACKAGE, methods[0].forcePackage)
+        assertEquals("https://shopee.co.id/cart", methods[0].uri)
+        assertTrue(methods.drop(1).all { it.uri.startsWith("shopee") })
+    }
 }

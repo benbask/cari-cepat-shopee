@@ -93,8 +93,56 @@ object ShopeeLauncher {
         )
     }
 
-    fun launch(context: Context, query: String): Result {
+    /**
+     * Kandidat tautan ke halaman keranjang Shopee. Sama seperti pencarian,
+     * urutannya dimulai dari tautan https yang paling stabil, lalu rute internal.
+     */
+    fun cartMethods(): List<Method> {
+        fun apprl(label: String, route: String): Method =
+            Method(label, "shopeeid://home?apprl=" + Uri.encode(route))
+
+        return listOf(
+            Method("1 · https shopee.co.id/cart", "https://shopee.co.id/cart", SHOPEE_PACKAGE),
+            apprl("2 · apprl cart", "rn/@shopee-rn/cart"),
+            apprl("3 · apprl cart/CART", "rn/@shopee-rn/cart/CART"),
+            Method("4 · shopeeid://cart", "shopeeid://cart"),
+            Method("5 · shopee://cart", "shopee://cart")
+        )
+    }
+
+    /** Membuka halaman keranjang Shopee tanpa membuka dialog pencarian. */
+    fun openCart(context: Context): Result {
         val appContext = context.applicationContext
+        val installed = isShopeeInstalled(appContext)
+
+        for (method in cartMethods()) {
+            val intent = buildIntent(method) ?: continue
+            val canOpen = if (method.forcePackage != null) {
+                installed
+            } else {
+                resolvedToShopee(appContext, intent)
+            }
+            if (canOpen && start(appContext, intent)) {
+                return Result.Success(method.uri)
+            }
+        }
+
+        if (installed) {
+            val openApp = appContext.packageManager.getLaunchIntentForPackage(SHOPEE_PACKAGE)
+            if (openApp != null && start(appContext, openApp)) {
+                Toast.makeText(
+                    appContext,
+                    R.string.cart_open_app_manually,
+                    Toast.LENGTH_LONG
+                ).show()
+                return Result.Success("app://shopee")
+            }
+        }
+
+        return Result.NotInstalled(openStore(appContext))
+    }
+
+    fun launch(context: Context, query: String): Result {        val appContext = context.applicationContext
         val installed = isShopeeInstalled(appContext)
 
         // Selalu salin kata kunci: berguna jika Shopee hanya membuka beranda.
